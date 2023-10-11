@@ -3,6 +3,8 @@ import { requireAuth } from "../../middlewares/reqAuth";
 import { validateRequest } from "../../middlewares/reqValidate";
 import { body } from "express-validator";
 import { Ticket } from "../../models/ticket";
+import { TicketCreatedPublisher } from "../../events/publishers/create";
+import { natsWrapper } from "../../natsWrapper";
 
 const router = Router();
 
@@ -24,6 +26,17 @@ router.post(
       userId: req.currentUser!.id,
     });
     await ticket.save();
+    console.log(ticket);
+    try {
+      await new TicketCreatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
     res.status(201).send(ticket);
   }
 );

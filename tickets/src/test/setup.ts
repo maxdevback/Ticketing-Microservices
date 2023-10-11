@@ -8,6 +8,8 @@ declare global {
   var signin: () => string[];
 }
 
+jest.mock("../natsWrapper.ts");
+
 let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = "asdfasdf";
@@ -20,6 +22,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
@@ -52,7 +55,7 @@ global.signin = () => {
 
   // Take JSON and encode it as base64
   const base64 = Buffer.from(sessionJSON).toString("base64");
-  console.log(base64);
+
   // return a string thats the cookie with the encoded data
   return [`session=${base64}`];
 };

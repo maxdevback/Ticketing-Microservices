@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: vfrcc/client
+          image: maxdevback/client
 ---
 apiVersion: v1
 kind: Service
