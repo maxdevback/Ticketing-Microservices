@@ -10,6 +10,8 @@ export interface TicketDoc extends Document {
   title: string;
   price: number;
   userId: string;
+  version: number;
+  orderId?: string;
 }
 
 export interface TicketModel extends Model<TicketDoc> {

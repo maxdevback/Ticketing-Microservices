@@ -1,5 +1,5 @@
+import { currentUser } from "@maxdevback/ticketing-shared/build";
 import { Router } from "express";
-import { currentUser } from "../../middlewares/currentUser";
 
 const router = Router();
 

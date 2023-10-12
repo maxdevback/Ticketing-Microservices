@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { NotFoundError } from "../errors/notFound";
 
 import signinRouter from "./signin";
 import currentUserRouter from "./currentUser";
 import singoutRouter from "./singout";
 import singupRouter from "./singup";
+import { NotFoundError } from "@maxdevback/ticketing-shared/build";
 
 const router = Router();
 router.use(signinRouter);

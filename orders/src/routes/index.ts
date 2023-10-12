@@ -4,7 +4,7 @@ import postRouter from "./post";
 import deleteRouter from "./delete";
 import getRouter from "./get";
 import getById from "./getById";
-import { NotFoundError } from "../errors/notFound";
+import { NotFoundError } from "@maxdevback/ticketing-shared/build";
 
 const router = Router();
 router.use(postRouter);

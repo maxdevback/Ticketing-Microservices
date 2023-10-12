@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import request from "supertest";
 import { App } from "../../App";
-import { OrderStatus } from "../../model/types";
-import { Order } from "../../model/order";
-import { Ticket } from "../../model/ticket";
+import { Order } from "../../models/order";
+import { Ticket } from "../../models/ticket";
 import { natsWrapper } from "../../natsWrapper";
+import { OrderStatus } from "@maxdevback/ticketing-shared/build";
 
 it("returns an error if the ticket does not exist", async () => {
   const ticketId = new mongoose.Types.ObjectId();
@@ -18,6 +18,7 @@ it("returns an error if the ticket does not exist", async () => {
 
 it("returns an error if the ticket is already reserved", async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -39,6 +40,7 @@ it("returns an error if the ticket is already reserved", async () => {
 
 it("reserves a ticket", async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
@@ -53,6 +55,7 @@ it("reserves a ticket", async () => {
 
 it("emits an order created event", async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });

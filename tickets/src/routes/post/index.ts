@@ -1,10 +1,12 @@
 import { Router, Request, Response } from "express";
-import { requireAuth } from "../../middlewares/reqAuth";
-import { validateRequest } from "../../middlewares/reqValidate";
 import { body } from "express-validator";
 import { Ticket } from "../../models/ticket";
-import { TicketCreatedPublisher } from "../../events/publishers/create";
 import { natsWrapper } from "../../natsWrapper";
+import {
+  requireAuth,
+  validateRequest,
+} from "@maxdevback/ticketing-shared/build";
+import { TicketCreatedPublisher } from "../../events/publishers/ticketCreatedPublisher";
 
 const router = Router();
 
@@ -33,6 +35,7 @@ router.post(
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId,
+        version: ticket.version,
       });
     } catch (err) {
       console.log(err);

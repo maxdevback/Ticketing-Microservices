@@ -1,10 +1,10 @@
 import { Router, Request, Response } from "express";
-import { NotFoundError } from "../errors/notFound";
 
 import getRouter from "./get";
 import getByIdRouter from "./getById";
 import postRouter from "./post";
 import updateRouter from "./update";
+import { NotFoundError } from "@maxdevback/ticketing-shared/build";
 
 const router = Router();
 

@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/reqAuth";
-import { NotFoundError } from "../../errors/notFound";
-import { NotAuthorizedError } from "../../errors/notAuth";
-import { Order } from "../../model/order";
-import { OrderStatus } from "../../model/types";
+import { Order } from "../../models/order";
 import { natsWrapper } from "../../natsWrapper";
-import { OrderCancelledPublisher } from "../../events/abstract/publisher/orderCancelledPublisher";
+import {
+  NotAuthorizedError,
+  NotFoundError,
+  OrderStatus,
+  requireAuth,
+} from "@maxdevback/ticketing-shared/build";
+import { OrderCancelledPublisher } from "../../events/publishers/orderCancelledPublisher";
 
 const router = Router();
 
@@ -25,6 +27,7 @@ router.get("/api/orders/:orderId", requireAuth, async (req, res) => {
 
   new OrderCancelledPublisher(natsWrapper.client).publish({
     id: order.id,
+    version: order.version,
     ticket: {
       id: order.ticket.id,
     },

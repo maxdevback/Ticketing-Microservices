@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { requireAuth } from "../../middlewares/reqAuth";
-import { Order } from "../../model/order";
+import { Order } from "../../models/order";
+import { requireAuth } from "@maxdevback/ticketing-shared/build";
 
 const router = Router();
 router.get("/api/orders", requireAuth, async (req, res) => {

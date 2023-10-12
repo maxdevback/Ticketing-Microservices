@@ -1,15 +1,17 @@
 import { Router, Request, Response } from "express";
-import { requireAuth } from "../../middlewares/reqAuth";
-import { validateRequest } from "../../middlewares/reqValidate";
 import { body } from "express-validator";
 import { Types } from "mongoose";
-import { OrderCreatedPublisher } from "../../events/abstract/publisher/orderCreatedPublisher";
 import { natsWrapper } from "../../natsWrapper";
-import { Order } from "../../model/order";
-import { OrderStatus } from "../../model/types";
-import { Ticket } from "../../model/ticket";
-import { NotFoundError } from "../../errors/notFound";
-import { BadRequestError } from "../../errors/badRequest";
+import { Order } from "../../models/order";
+import { Ticket } from "../../models/ticket";
+import {
+  BadRequestError,
+  NotFoundError,
+  OrderStatus,
+  requireAuth,
+  validateRequest,
+} from "@maxdevback/ticketing-shared/build";
+import { OrderCreatedPublisher } from "../../events/publishers/orderCreatedPublisher";
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 
@@ -48,9 +50,9 @@ router.post(
       ticket,
     });
     await order.save();
-
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
+      version: order.version,
       status: order.status,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(),
@@ -59,7 +61,6 @@ router.post(
         price: ticket.price,
       },
     });
-
     res.status(201).send(order);
   }
 );

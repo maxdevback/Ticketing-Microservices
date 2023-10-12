@@ -2,10 +2,12 @@ import { Request, Response, Router } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { validateRequest } from "../../middlewares/reqValidate";
 import { User } from "../../models/user";
-import { BadRequestError } from "../../errors/badRequest";
 import { Password } from "../../services/password";
+import {
+  BadRequestError,
+  validateRequest,
+} from "@maxdevback/ticketing-shared/build";
 
 const router = Router();
 

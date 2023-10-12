@@ -1,31 +1,36 @@
+import mongoose from "mongoose";
 import request from "supertest";
 import { App } from "../../App";
-import { Ticket } from "../../model/ticket";
-import { Order } from "../../model/order";
-import { OrderStatus } from "../../model/types";
+import { Ticket } from "../../models/ticket";
+import { Order } from "../../models/order";
 import { natsWrapper } from "../../natsWrapper";
+import { OrderStatus } from "@maxdevback/ticketing-shared/build";
 
 it("marks an order as cancelled", async () => {
+  // create a ticket with Ticket Model
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
   await ticket.save();
 
   const user = global.signin();
-
+  // make a request to create an order
   const { body: order } = await request(App)
     .post("/api/orders")
     .set("Cookie", user)
     .send({ ticketId: ticket.id })
     .expect(201);
 
+  // make a request to cancel the order
   await request(App)
     .delete(`/api/orders/${order.id}`)
     .set("Cookie", user)
     .send()
     .expect(204);
 
+  // expectation to make sure the thing is cancelled
   const updatedOrder = await Order.findById(order.id);
 
   expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
@@ -33,19 +38,21 @@ it("marks an order as cancelled", async () => {
 
 it("emits a order cancelled event", async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: "concert",
     price: 20,
   });
   await ticket.save();
 
   const user = global.signin();
-
+  // make a request to create an order
   const { body: order } = await request(App)
     .post("/api/orders")
     .set("Cookie", user)
     .send({ ticketId: ticket.id })
     .expect(201);
 
+  // make a request to cancel the order
   await request(App)
     .delete(`/api/orders/${order.id}`)
     .set("Cookie", user)

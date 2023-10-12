@@ -1,12 +1,14 @@
 import { Router, Request, Response } from "express";
-import { requireAuth } from "../../middlewares/reqAuth";
 import { body } from "express-validator";
-import { validateRequest } from "../../middlewares/reqValidate";
 import { Ticket } from "../../models/ticket";
-import { NotFoundError } from "../../errors/notFound";
-import { NotAuthorizedError } from "../../errors/notAuth";
-import { TicketUpdatedPublisher } from "../../events/publishers/update";
 import { natsWrapper } from "../../natsWrapper";
+import {
+  NotAuthorizedError,
+  NotFoundError,
+  requireAuth,
+  validateRequest,
+} from "@maxdevback/ticketing-shared/build";
+import { TicketUpdatedPublisher } from "../../events/publishers/ticketUpdatedPublisher";
 
 const router = Router();
 
@@ -35,6 +37,7 @@ router.put(
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
+      version: ticket.version,
     });
     res.send(ticket);
   }

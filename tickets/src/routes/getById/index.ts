@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Ticket } from "../../models/ticket";
-import { NotFoundError } from "../../errors/notFound";
+import { NotFoundError } from "@maxdevback/ticketing-shared/build";
 
 const router = Router();
 
