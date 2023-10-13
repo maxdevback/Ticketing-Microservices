@@ -32,3 +32,5 @@ __exportStar(require("./events/ticketUpdatedEvent"), exports);
 __exportStar(require("./events/types/orderStatus"), exports);
 __exportStar(require("./events/orderCanceledEvent"), exports);
 __exportStar(require("./events/orderCreatedEvent"), exports);
+__exportStar(require("./events/expirationCompleteEvent"), exports);
+__exportStar(require("./events/paymentCreatedEvent"), exports);

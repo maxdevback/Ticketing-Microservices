@@ -1,12 +1,12 @@
 {
   "name": "@maxdevback/ticketing-shared",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "del ./build/*",
     "build": "tsc",
-    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm publish"
+    "pub": "tsc && npm version patch && npm publish"
   },
   "author": "maxdevback",
   "license": "MIT",

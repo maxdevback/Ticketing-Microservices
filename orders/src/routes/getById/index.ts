@@ -25,14 +25,6 @@ router.get("/api/orders/:orderId", requireAuth, async (req, res) => {
   order.status = OrderStatus.Cancelled;
   await order.save();
 
-  new OrderCancelledPublisher(natsWrapper.client).publish({
-    id: order.id,
-    version: order.version,
-    ticket: {
-      id: order.ticket.id,
-    },
-  });
-
   res.status(200).send(order);
 });
 

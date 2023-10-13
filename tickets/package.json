@@ -4,7 +4,7 @@
   "description": "",
   "main": "App.ts",
   "scripts": {
-    "test": "jest --watchAll --no-cache",
+    "test-ci": "jest",
     "dev": "ts-node-dev ./src/index.ts"
   },
   "author": "maxdevback",

@@ -29,8 +29,11 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
-
+    console.log("Here");
     const ticket = await Ticket.findById(ticketId);
+    const tickets = await Ticket.find({});
+    console.log(tickets);
+    console.log("This is req body", req.body.ticketId, ticket);
     if (!ticket) {
       throw new NotFoundError();
     }
