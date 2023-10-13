@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
-    "test-ci": "jest"
+    "test:ci": "jest --forceExit"
   },
   "author": "maxdevback",
   "license": "MIT",
