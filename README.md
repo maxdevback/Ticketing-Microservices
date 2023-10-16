@@ -8,3 +8,6 @@ This project is written in microservices
 
 ## Launch
 - Run ```skaffold dev``` in cmd in root folder
+
+## Note
+- Test payment works only with fake visa cards
